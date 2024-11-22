@@ -79,12 +79,13 @@ const removeFromCart = (req, res, next) => {
   const { userId } = req.body;
 
   const user = User.findById(userId);
-  const prodinCart = user.cart.filter((product) => product._id !== id);
-  prodinCart.save();
+  user.cart = user.cart.filter((product) => product._id !== id);
+  user.save();
 };
 
 router.get("/", getProducts);
 router.post("/addProduct/:id", addProducts);
 router.post("/addtoCart/:id", addToCart);
+router.post("/removefromcart/:id", removeFromCart);
 
 module.exports = router;
