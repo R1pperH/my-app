@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const Product = require("../models/Product");
+const User = require("../models/User");
 
 const router = express.Router();
 
@@ -10,7 +11,18 @@ const getProducts = (req, res, next) => {
 };
 
 const addProducts = async (req, res, next) => {
-  const { name, price, description, summary, quantity } = req.body;
+  const { name, price, description, summary, quantity, image } = req.body;
+  const { id } = req.params;
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    console.log("no user forund");
+  }
+
+  if (!user.isAdmin) {
+    return;
+  }
 
   const product = new Product({
     name,
@@ -18,6 +30,7 @@ const addProducts = async (req, res, next) => {
     description,
     summary,
     quantity,
+    image,
   });
 
   await product.save();
@@ -34,6 +47,6 @@ const getProductById = (req, res, next) => {
 };
 
 router.get("/", getProducts);
-router.post("/addProduct", addProducts);
+router.post("/addProduct/:id", addProducts);
 
 module.exports = router;
