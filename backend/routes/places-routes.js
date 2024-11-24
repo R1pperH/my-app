@@ -6,8 +6,9 @@ const User = require("../models/User");
 
 const router = express.Router();
 
-const getProducts = (req, res, next) => {
-  res.status(200).json({ message: "Reached" });
+const getProducts = async (req, res, next) => {
+  const product = await Product.find();
+  res.status(200).json({ message: "Reached", product });
 };
 
 const addProducts = async (req, res, next) => {
@@ -38,10 +39,10 @@ const addProducts = async (req, res, next) => {
   res.json({ product });
 };
 
-const getProductById = (req, res, next) => {
+const getProductById = async (req, res, next) => {
   const { id } = req.params;
 
-  const product = Product.findById(id);
+  const product = await Product.findById(id);
 
   res.json(product);
 };
@@ -84,6 +85,7 @@ const removeFromCart = (req, res, next) => {
 };
 
 router.get("/", getProducts);
+router.get("/:id", getProductById);
 router.post("/addProduct/:id", addProducts);
 router.post("/addtoCart/:id", addToCart);
 
