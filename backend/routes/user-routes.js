@@ -51,7 +51,7 @@ const makeUser = async (req, res, next) => {
 };
 
 const logInUser = async (req, res, next) => {
-  const { email, passowrd } = req.body;
+  const { email, password } = req.body;
 
   try {
     const user = await User.findOne({ email: email });
@@ -61,7 +61,7 @@ const logInUser = async (req, res, next) => {
       return;
     }
 
-    const validPw = await bcrypt.compare(passowrd, user.password);
+    const validPw = await bcrypt.compare(password, user.password);
 
     if (!validPw) {
       console.log("Credentials not right");
@@ -121,5 +121,6 @@ const delUser = (req, res, next) => {
 };
 
 router.post("/signup", makeUser);
+router.post("/login", logInUser);
 
 module.exports = router;
