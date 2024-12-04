@@ -1,6 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const multer = require("multer");
+
+const uplaod = multer();
 
 const router = require("./routes/places-routes");
 const userRouter = require("./routes/user-routes");
@@ -11,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use("/api/products", router);
-app.use("/api/users", userRouter);
+app.use("/api/users", uplaod.any(), userRouter);
 mongoose
   .connect(
     `mongodb+srv://harshfn0207:aVXO0vct2CMjpoSn@shoplu.kk5ff.mongodb.net/shop`
