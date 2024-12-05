@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use("/api/products", router);
+app.use("/api/products", uplaod.any(), router);
 app.use("/api/users", uplaod.any(), userRouter);
 mongoose
   .connect(

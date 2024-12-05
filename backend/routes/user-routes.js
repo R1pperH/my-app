@@ -74,7 +74,7 @@ const logInUser = async (req, res, next) => {
       { expiresIn: "1h" }
     );
 
-    res.json({ token: token, userId: user._id });
+    res.json({ token: token, userId: user._id, isAdmin: user.isAdmin });
   } catch (err) {
     console.log(err);
   }

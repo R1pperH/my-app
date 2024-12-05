@@ -12,7 +12,7 @@ const getProducts = async (req, res, next) => {
 };
 
 const addProducts = async (req, res, next) => {
-  const { name, price, description, summary, quantity, image } = req.body;
+  const { name, price, description, summary, quantity } = req.body;
   const { id } = req.params;
 
   const user = await User.findById(id);
@@ -31,7 +31,7 @@ const addProducts = async (req, res, next) => {
     description,
     summary,
     quantity,
-    image,
+    // image,
   });
 
   await product.save();
